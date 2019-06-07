@@ -1,0 +1,13 @@
+---
+- name: "tasks: load os/platform/version specific variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - skip: true
+      files:
+        # yamllint disable-line rule:line-length
+        - "{{ backup_manager_os }}/{{ backup_manager_platform }}/{{ backup_manager_version }}.yaml"
+        - "{{ backup_manager_os }}/{{ backup_manager_platform }}.yaml"
+        - "{{ backup_manager_os }}/main.yaml"
+        - "main.yaml"
+      paths:
+        - "../vars/"

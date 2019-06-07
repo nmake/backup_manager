@@ -1,0 +1,11 @@
+---
+- name: "tasks: call os/platform/version specific tasks"
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - skip: true
+      files:
+        # yamllint disable-line rule:line-length
+        - "{{ backup_manager_os }}/{{ backup_manager_platform }}/{{ backup_manager_version }}/{{ backup_manager_function }}.yaml"
+        # yamllint disable-line rule:line-length
+        - "{{ backup_manager_os }}/{{ backup_manager_platform }}/{{ backup_manager_function }}.yaml"
+        - "{{ backup_manager_os }}/{{ backup_manager_function }}.yaml"

@@ -1,0 +1,23 @@
+---
+- name: "git_sync: commit local changes"
+  run_once: true
+  git_commit:
+    repo: "{{ git_store }}"
+
+- name: "git_sync: push local to remote"
+  run_once: true
+  git_push:
+    repo: "{{ git_store }}"
+    branch: "{{ backup_manager_git_branch }}"
+
+- name: "git_sync: checkout remote branch"
+  run_once: true
+  git_checkout:
+    repo: "{{ git_store }}"
+    branch: "{{ backup_manager_git_branch }}"
+
+- name: "git_sync: push commits to remote branch"
+  run_once: true
+  git_push:
+    repo: "{{ git_store }}"
+    branch: "{{ backup_manager_git_branch }}"

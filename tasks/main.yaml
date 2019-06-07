@@ -1,0 +1,24 @@
+---
+- name: "backup_manager: main"
+  block:
+    - name: "backup_manager: init vars"
+      include_tasks: "{{ role_path }}/includes/vars.yaml"
+
+    - name: "backup_manager: init pre_tasks"
+      include_tasks: "{{ role_path }}/includes/pre_tasks.yaml"
+
+    - name: "backup_manager: init pre_roles"
+      include_tasks: "{{ role_path }}/includes/pre_roles.yaml"
+
+    - name: "backup_manager: init git_store"
+      include_tasks: "{{ role_path }}/includes/git_store.yaml"
+
+    - name: "backup_manager: init tasks"
+      include_tasks: "{{ role_path }}/includes/tasks.yaml"
+
+  always:
+    - name: "backup_manager: init post tasks"
+      include_tasks: "{{ role_path }}/includes/post_tasks.yaml"
+
+    - name: "backup_manager: init post roles"
+      include_tasks: "{{ role_path }}/includes/post_roles.yaml"

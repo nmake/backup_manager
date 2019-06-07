@@ -1,0 +1,8 @@
+---
+- name: "pre_roles"
+  include_role:
+    name: "{{ item.name | default(item) }}"
+    defaults_from: "{{ item.defaults_from | default(omit, True) }}"
+    tasks_from: "{{ item.tasks_from | default(omit, True) }}"
+    vars_from: "{{ item.vars_from | default(omit, True) }}"
+  loop: "{{ backup_manager_pre_roles }}"

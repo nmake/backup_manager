@@ -1,0 +1,44 @@
+---
+- name: "git_store: Create temporary folder"
+  run_once: true
+  tempfile:
+    state: directory
+    suffix: git_store
+  register: r_tempfile_dir
+
+- name: "git_store: Clone git repository"
+  run_once: true
+  git:
+    repo: "{{ backup_manager_git_url }}"
+    dest: "{{ r_tempfile_dir.path }}"
+    version: "{{ backup_manager_git_branch }}"
+  register: r_git_store
+
+- name: "git_store: Set git_store"
+  set_fact:
+    git_store: "{{ r_git_store.git_dir_now }}"
+
+- name: "git_store: Configure local git repository"
+  run_once: true
+  git_config:
+    name: "{{ item.key }}"
+    repo: "{{ git_store }}"
+    scope: "local"
+    value: "{{ item.value }}"
+  loop:
+    - {key: user.name, value: "{{ backup_manager_git_committer_name }}"}
+    - {key: user.email, value: "{{ backup_manager_git_committer_email }}"}
+    - {key: ssh.identity, value: "{{ backup_manager_git_key_file }}"}
+    - {key: branch.autosetupmerge, value: "always"}
+    - {key: push.default, value: "current"}
+
+- name: "git_store: Ensure branch exists"
+  run_once: true
+  git_checkout:
+    repo: "{{ git_store }}"
+    branch: "{{ backup_manager_git_branch }}"
+
+- name: "git_store: Ensure backup folder structure"
+  file:
+    path: "{{ git_store }}/{{ backup_manager_backup_path }}"
+    state: directory

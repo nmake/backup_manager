@@ -1,0 +1,19 @@
+---
+backup_manager_pre_tasks: []
+backup_manager_pre_roles: []
+backup_manager_version: "{{ ansible_net_version | default(None, True) }}"
+backup_manager_os: "{{ ansible_network_os | default('nxos') }}"
+backup_manager_platform: "{{ ansible_network_platform | default('5000') }}"
+backup_manager_function: "{{ function | default('backup') }}"
+backup_manager_backup_path: "{{ inventory_hostname }}/config"
+# yamllint disable-line rule:line-length
+backup_manager_git_url: "git@{{ backup_manager_git_server }}:{{ backup_manager_git_username }}/{{ backup_manager_git_repo }}"
+backup_manager_git_server: "git.acme.com"
+backup_manager_git_repo: "backups"
+backup_manager_git_branch: "master"
+backup_manager_git_username: "backup_manager"
+backup_manager_git_key_file: "~/.ssh/id_rsa"
+backup_manager_git_commiter_email: "backup@ansible.com"
+backup_manager_git_commiter_name: "backup"
+backup_manager_post_tasks: []
+backup_manager_post_roles: []

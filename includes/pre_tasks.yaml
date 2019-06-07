@@ -1,0 +1,6 @@
+---
+- name: "pre_tasks"
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - skip: true
+      files: "{{ backup_manager_pre_tasks }}"
