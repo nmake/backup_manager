@@ -1,0 +1,12 @@
+---
+- name: "fortios.backup: fetch network configuration"
+  fortios_config:
+    host: "{{ ansible_host }}"
+  register: r_fortios_config_backup
+
+- name: "fortios.backup: copy configuration to repo folder"
+  copy:
+    content: "{{ r_fortios_config_backup.running_config }}"
+    dest: "{{ git_store }}/{{ backup_manager_backup_path }}/running.cfg"
+    force: "yes"
+  notify: git_sync
