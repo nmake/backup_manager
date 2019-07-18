@@ -2,8 +2,8 @@
 backup_manager_pre_tasks: []
 backup_manager_pre_roles: []
 backup_manager_version: "{{ ansible_net_version | default(None, True) }}"
-backup_manager_os: "{{ ansible_network_os | default('nxos') }}"
-backup_manager_platform: "{{ ansible_network_platform | default('5000') }}"
+backup_manager_os: "{{ ansible_network_os | default('unknown') }}"
+backup_manager_platform: "{{ ansible_network_platform | default(None, True) }}"
 backup_manager_function: "{{ function | default('backup') }}"
 backup_manager_backup_path: "{{ inventory_hostname }}/config"
 # yamllint disable-line rule:line-length
