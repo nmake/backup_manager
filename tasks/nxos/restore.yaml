@@ -1,1 +1,9 @@
 ---
+- name: "nxos.restore: copy configuration file to remote device"
+  nxos_file_copy:
+    local_file: "{{ git_store }}/{{ backup_manager_backup_path }}/running.cfg"
+    remote_file: "restore.cfg"
+
+- name: "nxos.restore: replace configuration"
+  nxos_config:
+    replace_src: "restore.cfg"
