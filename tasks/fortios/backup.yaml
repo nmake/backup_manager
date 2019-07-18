@@ -4,7 +4,7 @@
     host: "{{ ansible_host }}"
   register: r_fortios_config_backup
 
-- name: "fortios.backup: copy configuration to repo folder"
+- name: "fortios.backup: save configuration to git_store"
   copy:
     content: "{{ r_fortios_config_backup.running_config }}"
     dest: "{{ git_store }}/{{ backup_manager_backup_path }}/running.cfg"
