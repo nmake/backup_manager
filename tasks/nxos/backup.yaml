@@ -1,6 +1,21 @@
 ---
 - name: "nxos.backup: fetch network configuration"
   nxos_config:
+    backup: true
+  register: r_nxos_config
+
+- name: "nxos.backup: remove non configuration lines"
+  changed_when: false
+  lineinfile:
+    path: "{{ r_nxos_config.backup_path }}"
+    regexp: "{{ item }}"
+    state: "absent"
+  loop:
+    - '^(Current|Building) configuration.*'
+    - '^\!.*'
+
+- name: "nxos.backup: fetch network configuration"
+  nxos_config:
     backup: "true"
     backup_options:
       dir_path: "{{ git_store }}/{{ backup_manager_backup_path }}"
